@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fbla.atlas.atlas.pages.student.ChangeImage">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:textSize="15dp"
+        android:textColor="#000000"
+        android:text="Click On The Image Below To Change Your Image"/>
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/change_img"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/change_btn"
+        android:text="Change user Image"
+        android:textColor="#ffffff"
+        android:background="#0077c2"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"/>
+
+</FrameLayout>

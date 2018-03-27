@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_ebook"
+            android:title="Ebooks and Audio Books" />
+        <item
+            android:id="@+id/nav_checkedOut"
+            android:title="Checked Out Books" />
+        <item
+            android:id="@+id/nav_reserved"
+            android:title="Reserved Books" />
+
+        <item
+            android:id="@+id/nav_overDue"
+            android:title="Overdue Books" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:title="Book History" />
+
+    </group>
+
+    <item android:title="Others">
+        <menu>
+
+            <item
+                android:id="@+id/nav_map"
+                android:title="Map" />
+
+            <item
+                android:id="@+id/nav_share"
+                android:title="Share" />
+
+
+            <item
+                android:id="@+id/nav_error"
+                android:title="Found An Error? Message Us" />
+
+            <item
+                android:id="@+id/nav_about"
+                android:title="About us" />
+
+        </menu>
+    </item>
+
+</menu>

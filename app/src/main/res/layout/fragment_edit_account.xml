@@ -1,0 +1,98 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.fbla.atlas.atlas.pages.student.EditAccount">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/name_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:drawableLeft="@drawable/ic_person_avatar"
+            android:drawablePadding="7dp"
+            android:ems="10"
+            android:hint="Full Name"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/school_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:drawableLeft="@drawable/ic_old_school"
+            android:drawablePadding="7dp"
+            android:hint="School"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/phone_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:drawableLeft="@drawable/ic_phone_receiver"
+            android:drawablePadding="7dp"
+            android:hint="Phone #"
+            android:inputType="phone"
+            android:singleLine="true"/>
+
+
+        <Spinner
+            android:id="@+id/grade_update"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Grade"
+            android:inputType="textPersonName"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="88.75dp" />
+
+        <Spinner
+            android:id="@+id/age_update"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <Spinner
+            android:id="@+id/sex_update"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Gender"/>
+
+
+        <Button
+            android:id="@+id/update_acc_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#0077c2"
+            android:text="Update Account"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toTopOf="@+id/login2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </LinearLayout>
+
+
+</ScrollView>

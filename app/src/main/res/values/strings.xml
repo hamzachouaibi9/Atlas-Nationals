@@ -1,0 +1,124 @@
+<resources>
+    <string name="app_name">Atlas</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_home">Atlas</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="cart">Cart</string>
+    <string name="account">Account</string>
+    <string name="map">Map</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+
+    <string name="book_transition">transition</string>
+
+    <string name="start_top">M 20.7 7 C 21.1 6.6 21.1 6 20.7 5.6 L 18.4 3.3 C 18 2.9 17.4 2.9 17 3.3 L 15.2 5.1 L 19 8.9</string>
+    <string name="end_top">M 19.6 8 C 20 7.6 20 7 19.6 6.6 L 17.3 4.3 C 16.9 3.9 16.3 3.9 15.9 4.3 L 14.1 6.1 L 17.9 9.9</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="grade">
+        <item>Grade</item>
+        <item>9th</item>
+        <item>10th</item>
+        <item>11th</item>
+        <item>12th</item>
+        <item>Teacher</item>
+    </string-array>
+
+    <string-array name="search">
+        <item>Title</item>
+        <item>Author</item>
+    </string-array>
+
+    <string-array name="sex">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="age">
+        <item>Age</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>Teacher</item>
+    </string-array>
+    <string-array name="grade_update">
+        <item>Grade</item>
+        <item>9th</item>
+        <item>10th</item>
+        <item>11th</item>
+        <item>12th</item>
+        <item>Teacher</item>
+    </string-array>
+
+    <string-array name="sex_update">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="age_update">
+        <item>Age</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>Teacher</item>
+    </string-array>
+
+    <string-array name="book_add_genre">
+        <item>Genre</item>
+        <item>Action</item>
+        <item>Comedy</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Manga</item>
+        <item>Non Fiction</item>
+        <item>Romance</item>
+    </string-array>
+
+    <string name="title_activity_main">Atlas</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_navigation">Atlas</string>
+    <string name="title_activity_admin">Admin</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_admin_main">AdminMainActivity</string>
+    <string name="overdue">This Book Is Overdue Please Return It</string>
+
+    <string name="facebook_app_id">228440571049920</string>
+    <string name="facebook_app_secret">15a0a3b7c861b532c1eebee9b1de55f1</string>
+    <string name="facebook_protocol_scheme">fb228440571049920</string>
+
+    <string name="twitter_consumer_key" translatable="false">G9EgI2g3oCBFrEK4DvMrJWMs9</string>
+    <string name="twitter_consumer_secret" translatable="false">aSCgHf58qfsZYgMbewWFOf6xDYcoArXW0s3O86LtXqJvq7Ymbj</string>
+
+    <string name="step_1_checkout">To checkout a book, you will have to click on a book on the home page or to view more books click on the more text on the right of every genre, then click on the book that you want.</string>
+    <string name="step_2_checkout">When you have clicked the book that you want scroll to the bottom and click on the button that will meet your need.</string>
+    <string name="signout_step_2">Click on the Sign Out Button on the signout button and you will redirect you to the login page.</string>
+    <string name="signout_step_1">Click The 3 vertically aligned dots on the top right of the app.</string>
+    <string name="checking_step2">Click on the button that fits your request (Reserved Books, Checked Out Books, Carted Books, or Overdue books.</string>
+    <string name="checking_step1">Click on the 3 horizontal lines on the top left of the app.</string>
+    <string name="bug_help_step3">Fill in the body section and click submit to email us.</string>
+    <string name="bug_help_step2">Click on the Found An Error Message Us Button</string>
+    <string name="bug_help_step1">Open the side bar navigation.</string>
+    <string name="account_help_step1">Click on the top 3 vertically aligned buttons</string>
+    <string name="map_help_step2">Click on the Map Button</string>
+    <string name="map_help_step1">Click on the 3 lines on the top left to open the side bar navigation.</string>
+    <string name="search_help_step1">Click on the 3 vertically aligned dots in the top right corner.</string>
+    <string name="search_help_step2">Click on the Search Button</string>
+    <string name="search_help_4">Click on the book to go to the book information page.</string>
+    <string name="search_help_step3">Click on the search icon and stat typing</string>
+    <string name="about_atlas">Atlas is an application that can be used to access your school library within an instant virtually. It allows you browse through a vast collection of books quickly and efficiently. It allows you to checkout or reserve a book so that all you must do when you walk into your school library, is pick up the book you have checked out or reserved. Atlas will notify you when is book is ready to be picked up, if it\'s overdue, or when you are approaching the day of which the book is due for return. Atlas is compatible with many libraries, allowing students and teachers from different schools to view their own library. Our goal is to help manage the issuance of books and to provide other information at a school library. We will achieve this goal by: Allowing students and teachers to reserve books. Allowing students and teachers to check out books. Remind students and teachers when books are overdue. Show a map of the school library Please visit us on our social media at:</string>
+
+</resources>

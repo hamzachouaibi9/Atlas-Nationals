@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fbla.atlas.atlas">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name=".activities.SignUp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.UserInformation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainActivityNavigation"
+            android:label="@string/title_activity_main_navigation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.AdminMainActivity"
+            android:label="@string/title_activity_admin_main"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider228440571049920"
+            android:exported="true" />
+
+        <service
+            android:name=".services.BookNotificationServiceUser"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.OverdueBookService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.PushNotificationAdminService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".pages.student.BookPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.ActionList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.AllList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.ComedyList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.HistoryList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.HorrorList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.MangaList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.books_lists.NonFictionList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.AccountHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.BugHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.CheckoutHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.MapHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.SearchHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.SharingHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.SignOutHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.CheckingHelp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.CartPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.ReservedPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.OverduePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.CheckoutPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.MoreReviews"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".help.HelpHome"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.HistoryPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.SearchPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.student.AccountPage"
+            android:screenOrientation="portrait" />
+        <activity android:name=".pages.student.Ebook_AudioBook_Page" />
+        <activity android:name=".activities.Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,72 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fbla.atlas.atlas.pages.admin.AddBook"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageButton
+        android:layout_marginTop="50dp"
+        android:id="@+id/book_add_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logoatlas"
+        android:layout_gravity="center_horizontal"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/book_add_title"
+            android:hint="Title" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/book_add_description"
+            android:hint="Description" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/book_add_author"
+            android:hint="Author" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/book_add_genre"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="45dp"/>
+
+    <Button
+        android:layout_margin="8dp"
+        android:id="@+id/book_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0077c2"
+        android:textColor="#ffffff"
+        android:text="Add book" />
+
+
+</LinearLayout>

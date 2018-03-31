@@ -113,12 +113,12 @@ public class AccountPage extends AppCompatActivity{
                 getSupportActionBar().setTitle("Account Information");
 //                set the text with the strings that were called above
                 name.setText(NAME);
-                grade.setText("Grade \n\t\t\t" + GRADE);
-                sex.setText("Gender \n\t\t\t" + SEX);
-                school.setText("School \n\t\t\t" + SCHOOL);
-                phone.setText("Phone \n\t\t\t" + PHONE);
-                age.setText("Age \n\t\t\t" + AGE);
-                email.setText("Email \n\t\t\t" + firebaseAuth.getCurrentUser().getEmail());
+                grade.setText(GRADE);
+                sex.setText(SEX);
+                school.setText(SCHOOL);
+                phone.setText(PHONE);
+                age.setText(AGE);
+                email.setText(firebaseAuth.getCurrentUser().getEmail());
 //                dismiss the progress dialog when all of the data has been retrieved
                 progressDialog.dismiss();
 

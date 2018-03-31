@@ -18,9 +18,11 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -64,8 +66,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "Login";
     EditText editTextemail;
     EditText editTextpassword;
-    CircularProgressButton login;
-    Button register;
+    Button login;
+    TextView register;
 
     SignInButton googleBtn;
 
@@ -122,8 +124,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         editTextemail = (EditText) findViewById(R.id.editTextemail);
         editTextpassword = (EditText) findViewById(R.id.admin_password);
-        login = (CircularProgressButton) findViewById(R.id.login);
-        register = (Button) findViewById(R.id.register);
+        login = (Button) findViewById(R.id.login);
+        register = (TextView) findViewById(R.id.register);
         googleBtn = (SignInButton) findViewById(R.id.googleSignin_Btn);
 
         login.setOnClickListener(this);
@@ -205,7 +207,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
             case R.id.register:
                 startActivity(new Intent(Login.this, SignUp.class));
-                overridePendingTransition(R.anim.rotate_out,R.anim.rotate_in);
+                overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
         }
     }
@@ -332,7 +334,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
-        login.animate();
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -366,7 +367,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     });
 
                 }else{
-                    login.stopAnimation();
                     Toast.makeText(Login.this, "Email or Password Information Is Incorrect", Toast.LENGTH_SHORT).show();
                 }
 

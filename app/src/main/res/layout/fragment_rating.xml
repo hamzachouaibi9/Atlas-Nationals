@@ -5,7 +5,6 @@
     android:layout_height="200dp"
     tools:context="com.fbla.atlas.atlas.reviewFragments.RateFragment">
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_rating_image"
         android:layout_width="80dp"

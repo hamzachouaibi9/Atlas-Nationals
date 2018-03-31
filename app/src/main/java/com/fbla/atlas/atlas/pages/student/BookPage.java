@@ -265,6 +265,7 @@ public class BookPage extends AppCompatActivity {
                     description.setText(book_desc.substring(0, 250) + "...");
                 }else{
                     description.setText(book_desc);
+                    moreDescription.setVisibility(View.GONE);
                 }
                 title.setText(book_title);
                 author.setText(book_author);
@@ -394,7 +395,7 @@ public class BookPage extends AppCompatActivity {
             description.setText(book_desc);
             moreDescription.setText("View Less");
         }else{
-            description.setText(book_desc.substring(0,250) + "...");
+            description.setText(book_desc.substring(0, 250) + "...");
             moreDescription.setText("View More");
         }
     }

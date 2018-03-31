@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,13 +36,13 @@ import com.google.firebase.storage.UploadTask;
 public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
     Button register2;
-    Button login2;
-    TextInputEditText editTextEmail;
-    TextInputEditText editTextPassword;
+    TextView login2;
+    EditText editTextEmail;
+    EditText editTextPassword;
 
-    ImageButton pic;
+    ImageView pic;
 
-    TextInputEditText name, school, phone;
+    EditText name, school, phone;
     Spinner grade, sex, age;
 
     StorageReference storageReference;
@@ -70,13 +73,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
         text = (TextView) findViewById(R.id.text);
 
-        login2=(Button) findViewById(R.id.login2);
+        login2=(TextView) findViewById(R.id.login2);
 
-        pic = (ImageButton) findViewById(R.id.pic);
+        pic = (ImageView) findViewById(R.id.pic);
 
-        editTextEmail=(TextInputEditText) findViewById(R.id.register_email);
-        editTextPassword=(TextInputEditText) findViewById(R.id.register_pass);
-
+        editTextEmail=(EditText) findViewById(R.id.register_email);
+        editTextPassword=(EditText) findViewById(R.id.register_pass);
 
 
         mAuth= FirebaseAuth.getInstance();
@@ -85,9 +87,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.register2).setOnClickListener(this);
         findViewById(R.id.login2).setOnClickListener(this);
 
-        name = (TextInputEditText) findViewById(R.id.register_name);
-        school = (TextInputEditText) findViewById(R.id.register_school);
-        phone = (TextInputEditText) findViewById(R.id.register_phone);
+        name = (EditText) findViewById(R.id.register_name);
+        school = (EditText) findViewById(R.id.register_school);
+        phone = (EditText) findViewById(R.id.register_phone);
 
         grade = (Spinner) findViewById(R.id.grade);
         sex = (Spinner) findViewById(R.id.sex);
@@ -134,11 +136,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void registerUser(){
-        String email=editTextEmail.getEditableText().toString().trim();
-        String password=editTextPassword.getEditableText().toString().trim();
-        String Phone = phone.getEditableText().toString().trim();
-        String Name = name.getEditableText().toString().trim();
-        String School = school.getEditableText().toString().trim();
+        String email=editTextEmail.getText().toString().trim();
+        String password=editTextPassword.getText().toString().trim();
+        String Phone = phone.getText().toString().trim();
+        String Name = name.getText().toString().trim();
+        String School = school.getText().toString().trim();
         String Grade = grade.getSelectedItem().toString().trim();
         String Age = age.getSelectedItem().toString().trim();
         String Sex = sex.getSelectedItem().toString().trim();
@@ -268,7 +270,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
             case R.id.pic:
                 showImage();
-                text.setVisibility(View.GONE);
                 break;
         }
 

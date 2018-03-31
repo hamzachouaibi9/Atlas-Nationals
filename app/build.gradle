@@ -65,6 +65,9 @@ dependencies {
     compile 'com.github.clans:fab:1.6.2'
     compile 'com.github.Hitta:RippleEffect:82cf00e551'
     compile 'br.com.simplepass:loading-button-android:1.7.2'
+    compile 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+    compile 'com.github.medyo:fancybuttons:+'
+
 
 
 

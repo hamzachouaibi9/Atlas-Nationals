@@ -162,20 +162,36 @@
                 android:layout_marginTop="8dp"
                 android:text="Genre" />
 
-            <TextView
-                android:id="@+id/book_page_description"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Description of Book"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_author" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/book_page_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Description of Book"
+                    android:textSize="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/book_author" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/view_more_Description"
+                    android:text="View More"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="15dp"
+                    android:textColor="#0077c2"/>
+
+            </LinearLayout>
 
             <com.andexert.library.RippleView
                 android:layout_width="match_parent"
@@ -188,7 +204,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="16dp"
-                    android:background="#0077c2"
+                    android:background="@drawable/round"
                     android:text="Checkout Book"
                     android:textColor="#ffffff"
                     app:layout_constraintStart_toStartOf="parent"
@@ -207,7 +223,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="5dp"
-                    android:background="#0077c2"
+                    android:background="@drawable/round"
                     android:text="Reserve Book"
                     android:textColor="#ffffff"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +243,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="5dp"
-                    android:background="#0077c2"
+                    android:background="@drawable/round"
                     android:fadingEdge="horizontal"
                     android:text="Add Book to cart"
                     android:textColor="#ffffff"

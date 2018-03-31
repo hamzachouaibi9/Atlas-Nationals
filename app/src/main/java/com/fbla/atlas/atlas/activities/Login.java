@@ -1,5 +1,7 @@
 package com.fbla.atlas.atlas.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -52,6 +54,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.Executor;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
@@ -60,7 +64,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "Login";
     EditText editTextemail;
     EditText editTextpassword;
-    Button login;
+    CircularProgressButton login;
     Button register;
 
     SignInButton googleBtn;
@@ -76,10 +80,35 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private static final int RC_SIGN_IN = 9001;
 
-    android.support.design.widget.FloatingActionButton fab_login;
-    ProgressBar progressBar;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null){
+            final String uid = auth.getCurrentUser().getUid();
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("isAdmin").exists()) {
+                        startActivity(new Intent(Login.this, AdminMainActivity.class));
+                    } else {
+                        Intent i=new Intent(Login.this, MainActivityNavigation.class);
+                        i.addFlags(i.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                    }
 
-    @SuppressLint("RestrictedApi")
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,19 +116,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         FacebookSdk.sdkInitialize(this);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        fab_login = (android.support.design.widget.FloatingActionButton) findViewById(R.id.fab_login);
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging In User");
         progressDialog.setCancelable(false);
 
         editTextemail = (EditText) findViewById(R.id.editTextemail);
         editTextpassword = (EditText) findViewById(R.id.admin_password);
-        login = (Button) findViewById(R.id.login);
+        login = (CircularProgressButton) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         googleBtn = (SignInButton) findViewById(R.id.googleSignin_Btn);
-
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -107,6 +132,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
 
         mAuth = FirebaseAuth.getInstance();
+
         if (mAuth.getCurrentUser() != null){
             final String uid = mAuth.getCurrentUser().getUid();
             databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
@@ -136,7 +162,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
         mGoogleSignInClient = GoogleSignIn.getClient(Login.this, gso);
 
 
@@ -163,6 +188,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 // ...
             }
         });
+
     }
 
     public void onClick(View v) {
@@ -170,7 +196,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.login:
                 userLogin();
-                Log.d(TAG, "onClick: LOGIN");
                 printKeyHash(this);
                 break;
 
@@ -188,7 +213,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -209,11 +233,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     }
 
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        // [START_EXCLUDE silent]
-        progressDialog.show();
-        // [END_EXCLUDE]
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -221,28 +248,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            String uid = task.getResult().getUser().getUid();
-                            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                            data.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()){
-                                        startActivity(new Intent(Login.this, MainActivityNavigation.class));
-                                    }else{
-                                        startActivity(new Intent(Login.this, UserInformation.class));
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
+                            loginCheck(mAuth.getCurrentUser().getUid());
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         }
 
@@ -251,73 +258,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 });
     }
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-        // [START_EXCLUDE silent]
         progressDialog.show();
-        // [END_EXCLUDE]
-
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(Login.this, "FacebookLogin Successful", Toast.LENGTH_SHORT).show();
-                            String uid = task.getResult().getUser().getUid();
-                            DatabaseReference  data = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                            data.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()){
-                                        startActivity(new Intent(Login.this, MainActivityNavigation.class));
-                                    }else{
-                                        startActivity(new Intent(Login.this, UserInformation.class));
-                                    }
-                                }
+                            loginCheck(mAuth.getCurrentUser().getUid());
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(Login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Login failed.", Toast.LENGTH_SHORT).show();
                         }
 
-                        // [START_EXCLUDE]
-                        progressDialog.dismiss();
-                        // [END_EXCLUDE]
+                        // ...
                     }
                 });
     }
 
-
-    private void animateButtonWidth() {
-        ValueAnimator anim = ValueAnimator.ofInt(login.getMeasuredWidth(), getFabWidth());
-
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    public void loginCheck(String uid){
+        DatabaseReference  data = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+        data.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int val = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = login.getLayoutParams();
-                layoutParams.width = val;
-                login.requestLayout();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    startActivity(new Intent(Login.this, MainActivityNavigation.class));
+                }else{
+                    startActivity(new Intent(Login.this, UserInformation.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-        anim.setDuration(250);
-        anim.start();
     }
+
 
 
     private void userLogin() {
@@ -350,13 +332,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
-        final String EMAIL = editTextemail.getText().toString().trim();
-        final String Password = editTextpassword.getText().toString().trim();
-
-        progressDialog.setMessage("Logging User To Atlas");
-        progressDialog.show();
-
-        animateButtonWidth();
+        login.animate();
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -390,6 +366,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     });
 
                 }else{
+                    login.stopAnimation();
                     Toast.makeText(Login.this, "Email or Password Information Is Incorrect", Toast.LENGTH_SHORT).show();
                 }
 

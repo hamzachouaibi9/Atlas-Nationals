@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     tools:context="com.fbla.atlas.atlas.pages.student.SearchPage"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -26,11 +25,14 @@
     </android.support.design.widget.AppBarLayout>
 
 
-       <SearchView
+       <EditText
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
+           android:layout_height="45dp"
            android:id="@+id/search_text"
+           android:background="@drawable/round_edit_text"
            android:clickable="true"
+           android:drawableLeft="@drawable/ic_magnifier"
+           android:drawablePadding="8dp"
            android:layout_margin="8dp"
            android:focusable="true" />
 

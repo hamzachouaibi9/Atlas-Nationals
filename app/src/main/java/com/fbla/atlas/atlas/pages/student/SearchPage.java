@@ -13,10 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -45,7 +48,7 @@ import static android.content.ContentValues.TAG;
 
 public class SearchPage extends AppCompatActivity {
 
-    SearchView search;
+    EditText search;
     RecyclerView list;
     DatabaseReference database;
     ProgressDialog progressDialog;
@@ -67,34 +70,95 @@ public class SearchPage extends AppCompatActivity {
 
 //        find the database and recyclerview
         list = (RecyclerView) findViewById(R.id.search_list);
-        search = (SearchView) findViewById(R.id.search_text);
+        search = (EditText) findViewById(R.id.search_text);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.hasFixedSize();
 
-        search.setQueryHint("Search");
-        search.onActionViewExpanded();
-        search.setIconified(true);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                search.clearFocus();
-            }
-        }, 300);
-
-
         database = FirebaseDatabase.getInstance().getReference().child("Books").child("AllBooks");
-//          query the search text
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+        search.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                final FirebaseRecyclerAdapter<Book, BooksViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Book, BooksViewHolder>
+                        (Book.class, R.layout.book_row, BooksViewHolder.class, database) {
+                    @Override
+                    protected void populateViewHolder(BooksViewHolder viewHolder, Book model, int position) {
+                        viewHolder.title.setText(model.getTitle());
+                        viewHolder.description.setText(model.getDescription());
+                        Picasso.with(SearchPage.this).load(model.getImage()).into(viewHolder.image);
+
+                        Log.d(TAG, "populateViewHolder: " + getRef(position));
+
+                        final String book_id = getRef(position).getKey();
+                        viewHolder.ripple.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(SearchPage.this, BookPage.class);
+                                intent.putExtra("book_id", book_id);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                };
+                list.setAdapter(firebaseRecyclerAdapter);
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s == null){
+                    final FirebaseRecyclerAdapter<Book, BooksViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Book, BooksViewHolder>
+                            (Book.class, R.layout.book_row, BooksViewHolder.class, database) {
+                        @Override
+                        protected void populateViewHolder(BooksViewHolder viewHolder, Book model, int position) {
+                            viewHolder.title.setText(model.getTitle());
+                            viewHolder.description.setText(model.getDescription());
+                            Picasso.with(SearchPage.this).load(model.getImage()).into(viewHolder.image);
 
-                Query query = database.orderByChild("stitle").startAt(newText).endAt(newText + "\uf8ff");
+                            Log.d(TAG, "populateViewHolder: " + getRef(position));
+
+                            final String book_id = getRef(position).getKey();
+                            viewHolder.ripple.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SearchPage.this, BookPage.class);
+                                    intent.putExtra("book_id", book_id);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    };
+                    list.setAdapter(firebaseRecyclerAdapter);
+                }else{
+                    Query query = database.orderByChild("stitle").startAt(String.valueOf(s)).endAt(s + "\uf8ff");
+
+                    final FirebaseRecyclerAdapter<Book, BooksViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Book, BooksViewHolder>
+                            (Book.class, R.layout.book_row, BooksViewHolder.class, query) {
+                        @Override
+                        protected void populateViewHolder(BooksViewHolder viewHolder, Book model, int position) {
+                            viewHolder.title.setText(model.getTitle());
+                            viewHolder.description.setText(model.getDescription());
+                            Picasso.with(SearchPage.this).load(model.getImage()).into(viewHolder.image);
+
+                            Log.d(TAG, "populateViewHolder: " + getRef(position));
+
+                            final String book_id = getRef(position).getKey();
+                            viewHolder.ripple.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SearchPage.this, BookPage.class);
+                                    intent.putExtra("book_id", book_id);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    };
+                    list.setAdapter(firebaseRecyclerAdapter);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Query query = database.orderByChild("stitle").startAt(String.valueOf(s)).endAt(s + "\uf8ff");
 
                 final FirebaseRecyclerAdapter<Book, BooksViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Book, BooksViewHolder>
                         (Book.class, R.layout.book_row, BooksViewHolder.class, query) {
@@ -118,11 +182,17 @@ public class SearchPage extends AppCompatActivity {
                     }
                 };
                 list.setAdapter(firebaseRecyclerAdapter);
-
-
-                return false;
             }
+
         });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                search.clearFocus();
+            }
+        }, 300);
+
 
     }
 

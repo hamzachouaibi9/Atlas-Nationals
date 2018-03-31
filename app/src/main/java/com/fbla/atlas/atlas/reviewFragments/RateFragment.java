@@ -43,7 +43,6 @@ public class RateFragment extends Fragment {
     String user_id;
     String book_id;
     float rating;
-    String imageURL;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -97,7 +96,7 @@ public class RateFragment extends Fragment {
         userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         reviewDatabase = FirebaseDatabase.getInstance().getReference().child("Reviews").child(user_id).child(book_id);
 
-        image = (ImageView) view.findViewById(R.id.user_image);
+        image = (ImageView) view.findViewById(R.id.user_rating_image);
         next = (Button) view.findViewById(R.id.review_next);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
@@ -105,7 +104,7 @@ public class RateFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("pic").exists()){
-                    imageURL = dataSnapshot.child("pic").getValue().toString().trim();
+                    String imageURL = dataSnapshot.child("pic").getValue().toString().trim();
                     Picasso.with(getContext()).load(imageURL).into(image);
                 }else{
                     Picasso.with(getContext()).load(R.drawable.logoatlas).into(image);

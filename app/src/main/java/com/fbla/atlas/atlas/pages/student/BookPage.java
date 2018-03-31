@@ -69,14 +69,6 @@ public class BookPage extends AppCompatActivity {
 
     GoogleSignInClient mGoogleSignInClient;
 
-    FloatingActionMenu shareParent;
-//    FloatingActionButton shareTwitter;
-    FloatingActionMenu ebooksParent;
-//    FloatingActionButton shareEmail;
-//    FloatingActionButton ebook;
-//    FloatingActionsMenu ebookParent;
-//    FloatingActionButton audioBook;
-//    FloatingActionButton audioBookParent;
 
     CallbackManager callbackManager;
     ShareDialog shareDialog;
@@ -85,12 +77,14 @@ public class BookPage extends AppCompatActivity {
     SimpleDateFormat simpleDateFormat;
 
 
-    TextView title,description,author,genre, date, viewMore, review_more, countTV;
+    TextView title,description,author,genre, date, viewMore, review_more, countTV, moreDescription;
     String count;
     ImageView image;
     String DATE;
     String IMAGE;
     String book_id;
+
+    String book_desc;
 
     FirebaseAuth mauth = FirebaseAuth.getInstance();
     String user_id = mauth.getCurrentUser().getUid();
@@ -99,7 +93,46 @@ public class BookPage extends AppCompatActivity {
 
     RecyclerView reviewList;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        ratingData = FirebaseDatabase.getInstance().getReference().child("Reviews").child(user_id).child(book_id);
+
+        ratingData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("rating").exists() && dataSnapshot.child("comment").exists()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("book_id", book_id);
+                    ReviewDoneFragment fragment = new ReviewDoneFragment();
+                    fragment.setArguments(bundle);
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.review_FrameLayout, fragment, fragment.getTag()).commit();
+                }else if (dataSnapshot.child("rating").exists() && !dataSnapshot.child("comment").exists()){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("book_id", book_id);
+                    CommentFragment fragment = new CommentFragment();
+                    fragment.setArguments(bundle);
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.review_FrameLayout, fragment, fragment.getTag()).commit();
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("book_id", book_id);
+                    RateFragment fragment = new RateFragment();
+                    fragment.setArguments(bundle);
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.review_FrameLayout, fragment, fragment.getTag()).commit();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +168,13 @@ public class BookPage extends AppCompatActivity {
         date.setVisibility(View.GONE);
         viewMore = (TextView) findViewById(R.id.more_reviews);
         review_more = (TextView) findViewById(R.id.reviews_text);
-
-//        shareParent = (FloatingActionMenu) findViewById(R.id.audio);
-//        ebooksParent = (FloatingActionMenu) findViewById(R.id.ebooks);
+        moreDescription = (TextView) findViewById(R.id.view_more_Description);
+        moreDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkDescriptionLength();
+            }
+        });
 
 
         viewMore.setOnClickListener(new View.OnClickListener() {
@@ -159,39 +196,6 @@ public class BookPage extends AppCompatActivity {
         userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         reviewDatabase = FirebaseDatabase.getInstance().getReference().child("Review_Comments").child(book_id);
         ratingData = FirebaseDatabase.getInstance().getReference().child("Reviews").child(user_id).child(book_id);
-
-        ratingData.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("rating").exists() && dataSnapshot.child("comment").exists()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("book_id", book_id);
-                    ReviewDoneFragment fragment = new ReviewDoneFragment();
-                    fragment.setArguments(bundle);
-                    FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.review_FrameLayout, fragment, fragment.getTag()).commit();
-                }else if (dataSnapshot.child("rating").exists() && !dataSnapshot.child("comment").exists()){
-                    Bundle bundle = new Bundle();
-                    bundle.putString("book_id", book_id);
-                    CommentFragment fragment = new CommentFragment();
-                    fragment.setArguments(bundle);
-                    FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.review_FrameLayout, fragment, fragment.getTag()).commit();
-                }else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("book_id", book_id);
-                    RateFragment fragment = new RateFragment();
-                    fragment.setArguments(bundle);
-                    FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.review_FrameLayout, fragment, fragment.getTag()).commit();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
         checkoutDatabase.addValueEventListener(new ValueEventListener() {
@@ -249,16 +253,20 @@ public class BookPage extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 final String book_title = dataSnapshot.child("title").getValue().toString().trim();
-                String book_desc = dataSnapshot.child("description").getValue().toString().trim();
-                String book_author = dataSnapshot.child("author").getValue().toString().trim();
-                String book_genre = dataSnapshot.child("genre").getValue().toString().trim();
+                book_desc = dataSnapshot.child("description").getValue().toString().trim();
+                final String book_author = dataSnapshot.child("author").getValue().toString().trim();
+                final String book_genre = dataSnapshot.child("genre").getValue().toString().trim();
                 final String book_image = dataSnapshot.child("image").getValue().toString().trim();
 
                 getSupportActionBar().setTitle(book_title);
 
 //                Set the text with the string above
+                if (book_desc.length()>250) {
+                    description.setText(book_desc.substring(0, 250) + "...");
+                }else{
+                    description.setText(book_desc);
+                }
                 title.setText(book_title);
-                description.setText(book_desc);
                 author.setText(book_author);
                 genre.setText(book_genre);
                 Picasso.with(BookPage.this).load(book_image).into(image);
@@ -379,6 +387,18 @@ public class BookPage extends AppCompatActivity {
 
 
     }
+
+    private void checkDescriptionLength() {
+        final String view_text = moreDescription.getText().toString().trim();
+        if (view_text.equals("View More")){
+            description.setText(book_desc);
+            moreDescription.setText("View Less");
+        }else{
+            description.setText(book_desc.substring(0,250) + "...");
+            moreDescription.setText("View More");
+        }
+    }
+
 
     //      String all of the data and put them into the database
     private void addCheckout() {

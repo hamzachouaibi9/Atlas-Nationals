@@ -67,6 +67,8 @@ public class MainActivityNavigation extends AppCompatActivity
     String count;
     String user_id;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,9 @@ public class MainActivityNavigation extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        auth = FirebaseAuth.getInstance();
+        user_id = auth.getCurrentUser().getUid();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -89,12 +94,7 @@ public class MainActivityNavigation extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         displaySelectedScreen(R.id.navigation_home);
 
-        auth = FirebaseAuth.getInstance();
-
-        user_id = auth.getCurrentUser().getUid();
-
         View view = navigationView.getHeaderView(0);
-
         imageView = view.findViewById(R.id.nav_drawer_image);
         title = view.findViewById(R.id.nav_drawer_name);
         email = view.findViewById(R.id.nav_drawer_email);
@@ -223,7 +223,8 @@ public class MainActivityNavigation extends AppCompatActivity
         if (id == R.id.app_bar_sign_out) {
             FirebaseAuth.getInstance().signOut();
             LoginManager.getInstance().logOut();
-
+            startActivity(new Intent(MainActivityNavigation.this, Login.class));
+            finish();
             // [START config_signin]
             // Configure Google Sign In
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

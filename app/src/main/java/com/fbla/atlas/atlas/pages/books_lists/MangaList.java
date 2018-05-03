@@ -92,6 +92,6 @@ public class MangaList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 }

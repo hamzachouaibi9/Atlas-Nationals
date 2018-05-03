@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ import com.google.firebase.storage.UploadTask;
 public class UserInformation extends AppCompatActivity{
 
     Button register2;
-    ImageButton pic;
+    ImageView pic;
 
     EditText name, school, phone;
     Spinner grade, sex, age;
@@ -59,7 +60,7 @@ public class UserInformation extends AppCompatActivity{
 
         progressDialog= new ProgressDialog(this);
         register2=(Button) findViewById(R.id.google_register);
-        pic = (ImageButton) findViewById(R.id.google_pic);
+        pic = (ImageView) findViewById(R.id.google_pic);
         name = (EditText) findViewById(R.id.google_name);
         school = (EditText) findViewById(R.id.google_school);
         phone = (EditText) findViewById(R.id.google_phone);

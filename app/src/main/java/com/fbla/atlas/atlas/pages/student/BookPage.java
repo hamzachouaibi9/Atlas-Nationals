@@ -403,6 +403,10 @@ public class BookPage extends AppCompatActivity {
 
     //      String all of the data and put them into the database
     private void addCheckout() {
+        if (!mauth.getCurrentUser().isEmailVerified()){
+            Toast.makeText(this, "Please verify your email to checkout this book.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String Title = title.getText().toString().trim();
         String Description = description.getText().toString().trim();
         String Genre = genre.getText().toString().trim();
@@ -418,6 +422,10 @@ public class BookPage extends AppCompatActivity {
 
     //      String all of the data and put them into the database
     private void addReserve() {
+        if (!mauth.getCurrentUser().isEmailVerified()){
+            Toast.makeText(this, "Please verify your email to checkout this book.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String Title = title.getText().toString().trim();
         String Description = description.getText().toString().trim();
         String Genre = genre.getText().toString().trim();

@@ -260,6 +260,16 @@
 
                 </RelativeLayout>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/updateBtn"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:text="Update Account Information"/>
+
         </LinearLayout>
     </ScrollView>
 

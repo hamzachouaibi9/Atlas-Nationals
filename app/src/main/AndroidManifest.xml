@@ -125,11 +125,11 @@
         <activity
             android:name=".pages.student.AccountPage"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".pages.student.Ebook_AudioBook_Page"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activities.Login"
+        <activity
+            android:name=".pages.student.Ebook_AudioBook_Page"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.Login"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -137,6 +137,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.PasswordReset" />
+        <activity android:name=".activities.UserInfoUpdate"></activity>
     </application>
 
 </manifest>

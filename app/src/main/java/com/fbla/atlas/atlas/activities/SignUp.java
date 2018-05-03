@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -66,6 +68,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Sign Up");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog= new ProgressDialog(this);
 
@@ -296,6 +303,19 @@ This will get the image action
         UserData userData = new UserData(Name, Phone, School, Grade, Sex, Age, imageURL);
 
         databaseReference.child(uid).setValue(userData);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
 }

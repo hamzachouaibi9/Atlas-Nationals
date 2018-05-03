@@ -38,18 +38,18 @@ public class OverdueBookService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        String user_id = firebaseAuth.getCurrentUser().getUid();
+            firebaseAuth = FirebaseAuth.getInstance();
+            String user_id = firebaseAuth.getCurrentUser().getUid();
 
-        reserved = FirebaseDatabase.getInstance().getReference().child("User_Reserved").child(user_id);
-        checkout = FirebaseDatabase.getInstance().getReference().child("User_Checkout").child(user_id);
-        overdue = FirebaseDatabase.getInstance().getReference().child("Overdue_Books").child(user_id);
+            reserved = FirebaseDatabase.getInstance().getReference().child("User_Reserved").child(user_id);
+            checkout = FirebaseDatabase.getInstance().getReference().child("User_Checkout").child(user_id);
+            overdue = FirebaseDatabase.getInstance().getReference().child("Overdue_Books").child(user_id);
 
-        simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        calendar = Calendar.getInstance();
-        DATE = simpleDateFormat.format(calendar.getTime());
+            simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+            calendar = Calendar.getInstance();
+            DATE = simpleDateFormat.format(calendar.getTime());
+        }
 
-    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

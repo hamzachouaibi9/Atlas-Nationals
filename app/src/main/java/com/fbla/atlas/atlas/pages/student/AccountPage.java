@@ -13,12 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 import com.fbla.atlas.atlas.R;
 import com.fbla.atlas.atlas.activities.Login;
+import com.fbla.atlas.atlas.activities.UserInfoUpdate;
 import com.fbla.atlas.atlas.help.HelpHome;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,6 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +60,8 @@ public class AccountPage extends AppCompatActivity{
 
     TextView countTV;
 
+    Button updateBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class AccountPage extends AppCompatActivity{
         setContentView(R.layout.fragment_account);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("Account");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -87,6 +92,15 @@ public class AccountPage extends AppCompatActivity{
         pic = (ImageView) findViewById(R.id.pic);
         age = (TextView) findViewById(R.id.Age);
         email = (TextView) findViewById(R.id.email);
+        updateBtn = (Button) findViewById(R.id.updateBtn);
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AccountPage.this, UserInfoUpdate.class));
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+            }
+        });
 
 //            String the user id from firebase auth to get the user data from the firebase database
         user_id = firebaseAuth.getCurrentUser().getUid();
@@ -95,8 +109,7 @@ public class AccountPage extends AppCompatActivity{
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-//                String the data from firebase database
+                //                String the data from firebase database
                 String NAME = dataSnapshot.child("Users").child(user_id).child("name").getValue().toString().trim();
                 String GRADE = dataSnapshot.child("Users").child(user_id).child("grade").getValue().toString().trim();
                 String SEX = dataSnapshot.child("Users").child(user_id).child("sex").getValue().toString().trim();
@@ -104,13 +117,12 @@ public class AccountPage extends AppCompatActivity{
                 String PHONE = dataSnapshot.child("Users").child(user_id).child("phone").getValue().toString().trim();
                 String AGE = dataSnapshot.child("Users").child(user_id).child("age").getValue().toString().trim();
 //                for the image check whether it exists or not then string the data and put it into imageview
-                if (dataSnapshot.child("pic") == null) {
-                    Picasso.with(AccountPage.this).load(R.drawable.logoatlas).into(pic);
-                } else {
+                if (dataSnapshot.child("Users").child(user_id).child("pic").exists()) {
                     String IMAGE = dataSnapshot.child("Users").child(user_id).child("pic").getValue().toString().trim();
                     Picasso.with(AccountPage.this).load(IMAGE).into(pic);
+                } else {
+                    Picasso.with(AccountPage.this).load(R.drawable.logoatlas).into(pic);
                 }
-                getSupportActionBar().setTitle("Account Information");
 //                set the text with the strings that were called above
                 name.setText(NAME);
                 grade.setText(GRADE);
@@ -128,7 +140,6 @@ public class AccountPage extends AppCompatActivity{
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
 
     }

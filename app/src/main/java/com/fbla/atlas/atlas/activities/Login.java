@@ -54,11 +54,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.Executor;
-
-import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Login extends AppCompatActivity implements View.OnClickListener{
 
@@ -68,18 +63,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
     EditText editTextpassword;
     Button login;
     TextView register;
-
     SignInButton googleBtn;
-
     ProgressDialog progressDialog;
     FirebaseAuth mAuth;
-
     DatabaseReference databaseReference;
-
     CallbackManager mCallbackManager;
-
+    TextView passwordReset;
     GoogleSignInClient mGoogleSignInClient;
-
     private static final int RC_SIGN_IN = 9001;
 
     @Override
@@ -117,6 +107,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
 
         FacebookSdk.sdkInitialize(this);
+        mAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging In User");
@@ -132,8 +123,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         register.setOnClickListener(this);
         googleBtn.setOnClickListener(this);
 
+        passwordReset = (TextView) findViewById(R.id.password_reset);
 
-        mAuth = FirebaseAuth.getInstance();
+        passwordReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, PasswordReset.class));
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+            }
+        });
+
 
         if (mAuth.getCurrentUser() != null){
             final String uid = mAuth.getCurrentUser().getUid();
@@ -209,6 +208,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 startActivity(new Intent(Login.this, SignUp.class));
                 overridePendingTransition(R.anim.fadein,R.anim.fadeout);
                 break;
+
         }
     }
 

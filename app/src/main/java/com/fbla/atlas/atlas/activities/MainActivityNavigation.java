@@ -267,10 +267,6 @@ public class MainActivityNavigation extends AppCompatActivity
                 ft00.replace(R.id.navigation_content, fragment);
                 ft00.commit();
                 break;
-            case R.id.nav_ebook:
-                startActivity(new Intent(MainActivityNavigation.this, Ebook_AudioBook_Page.class));
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                break;
             case R.id.nav_checkedOut:
                 startActivity(new Intent(MainActivityNavigation.this, CheckoutPage.class));
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);

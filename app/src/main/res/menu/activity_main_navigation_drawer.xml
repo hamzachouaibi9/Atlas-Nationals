@@ -8,9 +8,6 @@
             android:id="@+id/navigation_home"
             android:title="Home" />
         <item
-            android:id="@+id/nav_ebook"
-            android:title="Ebooks and Audio Books" />
-        <item
             android:id="@+id/nav_checkedOut"
             android:title="Checked Out Books" />
         <item

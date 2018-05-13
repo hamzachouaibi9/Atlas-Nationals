@@ -34,7 +34,7 @@ public class AllList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Action Books");
+        getSupportActionBar().setTitle("All Books");
 
         list = (RecyclerView) findViewById(R.id.all_list);
         list.setLayoutManager(new LinearLayoutManager(this));

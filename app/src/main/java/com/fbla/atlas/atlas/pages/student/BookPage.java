@@ -42,6 +42,7 @@ import com.fbla.atlas.atlas.reviewFragments.ReviewDoneFragment;
 import com.fbla.atlas.atlas.view_holders.ReviewViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -69,6 +70,7 @@ public class BookPage extends AppCompatActivity {
 
     GoogleSignInClient mGoogleSignInClient;
 
+    FloatingActionButton facebook, twitter, email;
 
     CallbackManager callbackManager;
     ShareDialog shareDialog;
@@ -82,7 +84,7 @@ public class BookPage extends AppCompatActivity {
     ImageView image;
     String DATE;
     String IMAGE;
-    String book_id;
+    String book_id, book_title, book_image;
     String book_desc;
 
     FirebaseAuth mauth = FirebaseAuth.getInstance();
@@ -173,7 +175,9 @@ public class BookPage extends AppCompatActivity {
                 checkDescriptionLength();
             }
         });
-
+        facebook = (FloatingActionButton) findViewById(R.id.fab_facebook);
+        twitter = (FloatingActionButton) findViewById(R.id.fab_twitter);
+        email = (FloatingActionButton) findViewById(R.id.fab_email);
 
         viewMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,11 +254,11 @@ public class BookPage extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                final String book_title = dataSnapshot.child("title").getValue().toString().trim();
+                book_title = dataSnapshot.child("title").getValue().toString().trim();
                 book_desc = dataSnapshot.child("description").getValue().toString().trim();
                 final String book_author = dataSnapshot.child("author").getValue().toString().trim();
                 final String book_genre = dataSnapshot.child("genre").getValue().toString().trim();
-                final String book_image = dataSnapshot.child("image").getValue().toString().trim();
+                book_image = dataSnapshot.child("image").getValue().toString().trim();
 
                 getSupportActionBar().setTitle(book_title);
 
@@ -278,6 +282,28 @@ public class BookPage extends AppCompatActivity {
 
             }
         });
+
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareBookEmail(book_title);
+            }
+        });
+
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareBookTwitter(book_title, book_image);
+            }
+        });
+
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareBookFacebook(book_title);
+            }
+        });
+
 
 //        Set the on click listener for the buttons and call the function that is required
         cart = (Button) findViewById(R.id.add_cart_button);
